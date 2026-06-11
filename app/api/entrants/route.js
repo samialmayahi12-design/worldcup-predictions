@@ -7,13 +7,13 @@ export async function POST(req) {
   const user = userFromRequest(req);
   if (!isSuper(user)) return NextResponse.json({ error: "للمدير فقط" }, { status: 403 });
 
-  const { name, grant } = await req.json().catch(() => ({}));
-  if (!name) return NextResponse.json({ error: "اسم مطلوب" }, { status: 400 });
+  const { emp, grant } = await req.json().catch(() => ({}));
+  if (!emp) return NextResponse.json({ error: "الرقم الوظيفي مطلوب" }, { status: 400 });
 
   if (grant) {
-    await db.from("entrants").upsert({ name }, { onConflict: "name" });
+    await db.from("entrants").upsert({ emp }, { onConflict: "emp" });
   } else {
-    await db.from("entrants").delete().eq("name", name);
+    await db.from("entrants").delete().eq("emp", emp);
   }
-  return NextResponse.json({ ok: true, name, grant: !!grant });
+  return NextResponse.json({ ok: true, emp, grant: !!grant });
 }

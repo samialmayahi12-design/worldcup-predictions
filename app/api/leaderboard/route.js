@@ -5,8 +5,8 @@ import { judge } from "@/lib/points";
 
 export async function GET() {
   const [users, preds, results] = await Promise.all([
-    db.from("users").select("name"),
-    db.from("predictions").select("user_name, match_id, eh, ea"),
+    db.from("users").select("emp, name"),
+    db.from("predictions").select("user_emp, match_id, eh, ea"),
     db.from("results").select("match_id, h, a"),
   ]);
 
@@ -14,10 +14,10 @@ export async function GET() {
   (results.data || []).forEach((r) => { resultsMap[r.match_id] = r; });
 
   const acc = {};
-  (users.data || []).forEach((u) => { acc[u.name] = { name: u.name, pts: 0, preds: 0, exact: 0, hit: 0, done: 0 }; });
+  (users.data || []).forEach((u) => { acc[u.emp] = { emp: u.emp, name: u.name, pts: 0, preds: 0, exact: 0, hit: 0, done: 0 }; });
 
   (preds.data || []).forEach((p) => {
-    const a = acc[p.user_name];
+    const a = acc[p.user_emp];
     if (!a) return;
     a.preds++;
     const r = resultsMap[p.match_id];

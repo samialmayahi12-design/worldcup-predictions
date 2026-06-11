@@ -9,10 +9,10 @@ export async function GET(req) {
   if (!isSuper(user)) return NextResponse.json({ error: "للمدير فقط" }, { status: 403 });
 
   const [users, entrants] = await Promise.all([
-    db.from("users").select("name, emp, created_at").order("created_at", { ascending: true }),
-    db.from("entrants").select("name"),
+    db.from("users").select("emp, name, created_at").order("created_at", { ascending: true }),
+    db.from("entrants").select("emp"),
   ]);
-  const entrantSet = new Set((entrants.data || []).map((e) => e.name));
-  const list = (users.data || []).map((u) => ({ name: u.name, emp: u.emp, isEntrant: entrantSet.has(u.name) }));
+  const entrantSet = new Set((entrants.data || []).map((e) => e.emp));
+  const list = (users.data || []).map((u) => ({ emp: u.emp, name: u.name, isEntrant: entrantSet.has(u.emp) }));
   return NextResponse.json({ users: list });
 }

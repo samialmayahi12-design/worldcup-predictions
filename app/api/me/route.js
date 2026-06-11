@@ -9,7 +9,7 @@ export async function GET(req) {
   if (!user) return NextResponse.json({ error: "غير مصرّح" }, { status: 401 });
 
   const [preds, results, entrant] = await Promise.all([
-    db.from("predictions").select("match_id, eh, ea").eq("user_name", user.name),
+    db.from("predictions").select("match_id, eh, ea").eq("user_emp", user.emp),
     db.from("results").select("match_id, h, a, entered_by"),
     isEntrant(user),
   ]);
