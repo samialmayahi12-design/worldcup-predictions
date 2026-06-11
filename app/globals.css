@@ -1,0 +1,16 @@
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: 'Tajawal', sans-serif;
+  background: #F6F4ED;
+  color: #14201A;
+}
+button { font-family: 'Tajawal', sans-serif; cursor: pointer; }
+input { font-family: 'Tajawal', sans-serif; }
+.num { font-family: 'Lalezar', 'Tajawal', sans-serif; }
+.card { transition: box-shadow .15s ease; }
+.card:hover { box-shadow: 0 4px 18px rgba(11,35,26,.10); }
+button:focus-visible, input:focus-visible { outline: 3px solid #E5B53A; outline-offset: 2px; }
+.toast { animation: pop .25s ease; }
+@keyframes pop { from { transform: translate(-50%, 12px); opacity: 0; } to { transform: translate(-50%, 0); opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .toast { animation: none; } }
